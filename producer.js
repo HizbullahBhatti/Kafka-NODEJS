@@ -1,4 +1,10 @@
 const { kafka } = require('./client');
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
 
 const init = async () => {
 
@@ -8,23 +14,42 @@ const init = async () => {
     await producer.connect();
     console.log('Producer Connected');
 
-    console.log('Sending Messages...');
+    rl.setPrompt('Enter Message: ');
+    rl.prompt();
 
-    await producer.send({
-        topic: 'rider-updates',
-        messages: 
-        [
-            { 
-                partition: 0,
-                key: 'rider1', value: JSON.stringify({ name: 'Hizbullah', location: 'Karachi  ' }) 
-            },
-        ],
+    rl.on('line', async (message) => {
+
+        const [riderName,location ] = message.split(' ');
+
+        await producer.send({
+            topic: 'rider-updates',
+            messages: 
+            [
+                { 
+                    partition: location.toLowerCase() === 'karachi' ? 0 : 1, 
+                    key: 'rider1', value: JSON.stringify({ name: riderName, location: location }) 
+                },
+            ],
+        }).then(() => console.log('Message Sent')).catch(console.error);
     })
 
-    console.log('Messages Sent');
+    //console.log('Sending Messages...');
 
-    await producer.disconnect();
-    console.log('Producer Disconnected');
+    // await producer.send({
+    //     topic: 'rider-updates',
+    //     messages: 
+    //     [
+    //         { 
+    //             partition: 0,
+    //             key: 'rider1', value: JSON.stringify({ name: 'Hizbullah', location: 'Karachi  ' }) 
+    //         },
+    //     ],
+    // })
+
+    //console.log('Messages Sent');
+
+    // await producer.disconnect();
+    // console.log('Producer Disconnected');
 }
 
 init().then(() => console.log('Done')).catch(console.error);
