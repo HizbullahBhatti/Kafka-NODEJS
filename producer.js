@@ -21,20 +21,10 @@ const init = async () => {
         ],
     })
 
-    // const producer = kafka.producer();
-    // console.log('Producer Connecting...');
-    // await producer.connect();
-    // console.log('Producer Connected');
+    console.log('Messages Sent');
 
-    // console.log('Sending Messages...');
-    // await producer.send({
-    //     topic: 'rider-updates',
-    //     messages: [
-    //         { value: 'Hello KafkaJS user!' },
-    //     ],
-    // });
-    // console.log('Messages Sent');
-
-    // await producer.disconnect();
-    // console.log('Producer Disconnected');
+    await producer.disconnect();
+    console.log('Producer Disconnected');
 }
+
+init().then(() => console.log('Done')).catch(console.error);
