@@ -1,0 +1,20 @@
+{
+  "name": "kafka-app",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/HizbullahBhatti/Kafka-Nodejs#readme",
+  "bugs": {
+    "url": "https://github.com/HizbullahBhatti/Kafka-Nodejs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HizbullahBhatti/Kafka-Nodejs.git"
+  },
+  "license": "ISC",
+  "author": "Hizbullah",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
